@@ -51,7 +51,7 @@ namespace Chess.Engine
 
         }
 
-        public static List<Move> GenerateSlidingMoves(Board board, Square from, PieceColor color, (int dr, int dc)[] directions) 
+        private static List<Move> GenerateSlidingMoves(Board board, Square from, PieceColor color, (int dr, int dc)[] directions) 
         {
         
             var moves = new List<Move>();
@@ -95,7 +95,7 @@ namespace Chess.Engine
             return moves;
 
         }
-        public static List<Move> GenerateKnightMoves(Board board, Square from, PieceColor color) 
+        private static List<Move> GenerateKnightMoves(Board board, Square from, PieceColor color) 
         {
         
             var moves = new List<Move>();
@@ -124,5 +124,25 @@ namespace Chess.Engine
 
             return moves;
         }
+
+        private static List<Move> GenerateKingMoves(Board board, Square from, PieceColor color)
+        {
+            var moves = new List<Move>();
+
+            // Same eight directions as the queen — the king just doesn't slide.
+            foreach (var (dr, dc) in QueenDirections)
+            {
+                var to = new Square(from.Row + dr, from.Col + dc);
+                if (!to.IsOnBoard)
+                    continue;
+
+                Piece? target = board[to];
+                if (target is null || target.Value.Color != color)
+                    moves.Add(new Move(from, to));
+            }
+
+            return moves;
+        }
+
     }
 }
