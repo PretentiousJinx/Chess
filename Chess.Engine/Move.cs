@@ -24,11 +24,14 @@
             public Square From { get; }
             public Square To { get; }
 
-            public Move(Square from, Square to)
+            public PieceType? Promotion { get; }
+
+            public Move(Square from, Square to, PieceType? promotion = null)
             {
 
                 From = from;
                 To = to;
+                Promotion = promotion;
 
             }
 

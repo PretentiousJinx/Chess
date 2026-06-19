@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-
-namespace Chess.Engine
+﻿namespace Chess.Engine
 {
     public class Board 
     {
