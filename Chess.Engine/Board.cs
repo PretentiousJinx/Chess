@@ -1,4 +1,6 @@
-﻿namespace Chess.Engine
+﻿using System;
+
+namespace Chess.Engine
 {
     public class Board 
     {
@@ -47,11 +49,31 @@
 
         }
 
-        public void Move(int fromRow, int fromCol, int toRow, int toCol) 
+        public void Move(int fromRow, int fromCol, int toRow, int toCol)
         {
 
             _squares[toRow, toCol] = _squares[fromRow, fromCol];
             _squares[fromRow, fromCol] = null;
+
+        }
+
+        public Board Clone() 
+        {
+            var copy = new Board();
+            Array.Copy(_squares, copy._squares, _squares.Length);
+            return copy;
+        }
+
+        public void MakeMove(Move move) 
+        {
+
+            Piece? moving = _squares[move.From.Row, move.From.Col];
+            _squares[move.From.Row, move.From.Col] = null;
+
+        if (move.Promotion is PieceType promotion && moving is Piece p)
+            _squares[move.To.Row, move.To.Col] = new Piece(promotion, p.Color);
+        else
+            _squares[move.To.Row, move.To.Col] = moving;
         
         }
 
