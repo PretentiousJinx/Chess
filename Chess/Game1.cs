@@ -59,6 +59,8 @@ namespace Chess
 
         private void HandleClick(int pixelX, int pixelY)
         {
+            if (_gameOver)
+                return;
 
             var client = Window.ClientBounds;
             int boardX = pixelX * (8 * TileSize) / client.Width;
@@ -95,7 +97,7 @@ namespace Chess
 
             Piece? piece = _board[clicked];
 
-            if (piece is not null)
+            if (piece is not null && piece.Value.Color == _sideToMove)
             {
 
                 _selectedSquare = clicked;
@@ -185,7 +187,7 @@ namespace Chess
         }
 
         private static PieceColor Opponent(PieceColor color)
-            => color == PieceColor.White ? PieceColor.White : color;
+            => color == PieceColor.White ? PieceColor.Black : PieceColor.White;
 
         private static string GlyphFor(PieceType type) => type switch
         {
